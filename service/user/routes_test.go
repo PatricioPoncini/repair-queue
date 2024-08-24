@@ -14,7 +14,7 @@ import (
 
 type mockUserStore struct{}
 
-func (m *mockUserStore) GetUserByUserName(userName string) (*types.User, error) {
+func (m *mockUserStore) GetUserByUserName(_ string) (*types.User, error) {
 	return nil, fmt.Errorf("user not found")
 }
 

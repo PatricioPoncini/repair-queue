@@ -1,3 +1,4 @@
+// Package main contains the entry point for the database migration command.
 package main
 
 import (
@@ -22,7 +23,6 @@ func main() {
 		AllowNativePasswords: true,
 		ParseTime:            true,
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,7 +37,6 @@ func main() {
 		"mysql",
 		driver,
 	)
-
 	if err != nil {
 		log.Fatal(err)
 	}

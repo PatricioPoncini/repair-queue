@@ -1,3 +1,4 @@
+// Package main contains the entry point for the application.
 package main
 
 import (
@@ -21,7 +22,6 @@ func main() {
 		AllowNativePasswords: true,
 		ParseTime:            true,
 	})
-
 	if err != nil {
 		log.Fatal(err)
 	}
