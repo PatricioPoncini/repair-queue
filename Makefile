@@ -1,3 +1,5 @@
+all: build test lint
+
 build:
 	@go build -o bin/repair_queue cmd/main.go
 
@@ -6,6 +8,12 @@ test:
 
 run: build
 	@./bin/repair_queue
+
+lint:
+	@golangci-lint run
+	
+lint-fix:
+	@golangci-lint run --fix
 
 migration:
 	@migrate create -ext sql -dir cmd/migrate/migrations $(filter-out $@,$(MAKECMDGOALS))
