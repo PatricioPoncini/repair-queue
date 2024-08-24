@@ -18,6 +18,14 @@ make run
 make test
 ```
 
+### `✨ Run Lint`
+
+```bash
+make lint
+# or
+make lint-fix
+```
+
 ### `📦 Run Migrations`
 
 `Up Migrations ⬆️`
