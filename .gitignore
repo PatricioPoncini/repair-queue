@@ -21,7 +21,8 @@
 go.work
 go.work.sum
 
-# bin
-
 # env file
 .env
+
+## .idea folder
+.idea/
