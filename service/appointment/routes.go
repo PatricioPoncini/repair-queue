@@ -68,7 +68,7 @@ func (h *Handler) getMinimizedAppointments(w http.ResponseWriter, _ *http.Reques
 		return
 	}
 
-	if err := utils.WriteJSON(w, http.StatusCreated, appointments); err != nil {
+	if err := utils.WriteJSON(w, http.StatusOK, appointments); err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, fmt.Errorf("error generating response"))
 	}
 }

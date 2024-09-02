@@ -2,6 +2,7 @@ package appointment
 
 import (
 	"database/sql"
+	"fmt"
 	"repair-queue/types"
 )
 
@@ -30,13 +31,11 @@ func (s *Store) CreateAppointment(appointment types.Appointment) error {
 
 // GetMinimizedAppointments retrieves appointments from the database in order by createdAt date.
 func (s *Store) GetMinimizedAppointments() ([]*types.MinimizedAppointment, error) {
-	query := `
+	rows, err := s.db.Query(`
         SELECT id, model, make, status, createdAt
         FROM appointment 
         ORDER BY createdAt ASC
-    `
-
-	rows, err := s.db.Query(query)
+    `)
 	if err != nil {
 		return nil, err
 	}
@@ -64,6 +63,10 @@ func (s *Store) GetMinimizedAppointments() ([]*types.MinimizedAppointment, error
 
 	if err = rows.Err(); err != nil {
 		return nil, err
+	}
+
+	if len(appointments) == 0 {
+		return nil, fmt.Errorf("appointments not found")
 	}
 
 	return appointments, nil
