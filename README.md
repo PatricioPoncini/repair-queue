@@ -13,7 +13,9 @@ make run
 ```
 
 ### `Setting Up Environment Configuration for Docker Compose`
+
 1. Create a `.env` file in the root directory of your project with the following content:
+
 ```bash
 DB_USER=root
 DB_PASSWORD=my_secret_password
@@ -24,7 +26,8 @@ PORT=3000
 JWT_SECRET=my_super_secret_key
 JWT_EXPIRATION_TIME=60 # seconds
 ```
-2. Start your Docker containers by `docker compose up -d` in your terminal
+
+2. Start your Docker containers by running `docker compose up -d` in your terminal
 3. Set up the project locally by running `make run`
 
 ### `🔬 Run Tests`
