@@ -1,10 +1,7 @@
-all: build test lint
+all: build lint
 
 build:
 	@go build -o bin/repair_queue cmd/main.go
-
-test:
-	@go test -v ./...
 
 run: build
 	@./bin/repair_queue

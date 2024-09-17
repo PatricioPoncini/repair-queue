@@ -2,8 +2,10 @@
 package appointment
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
+	"repair-queue/service/middlewares"
 	"repair-queue/types"
 	"repair-queue/utils"
 
@@ -25,8 +27,9 @@ func NewHandler(store types.AppointmentStore) *Handler {
 
 // RegisterRoutes sets up the HTTP routes for the Handler
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/appointment", h.createAppointment).Methods("POST")
-	router.HandleFunc("/appointment", h.getMinimizedAppointments).Methods("GET")
+	router.HandleFunc("/appointment", middlewares.JWTAuthMiddleware()(h.createAppointment)).Methods("POST")
+	router.HandleFunc("/appointment", middlewares.JWTAuthMiddleware()(h.getMinimizedAppointments)).Methods("GET")
+	router.HandleFunc("/appointment/status", middlewares.JWTAuthMiddleware()(h.updateAppointmentStatus)).Methods("PUT")
 }
 
 func (h *Handler) createAppointment(w http.ResponseWriter, r *http.Request) {
@@ -68,7 +71,29 @@ func (h *Handler) getMinimizedAppointments(w http.ResponseWriter, _ *http.Reques
 		return
 	}
 
-	if err := utils.WriteJSON(w, http.StatusCreated, appointments); err != nil {
+	if err := utils.WriteJSON(w, http.StatusOK, appointments); err != nil {
+		utils.WriteError(w, http.StatusInternalServerError, fmt.Errorf("error generating response"))
+	}
+}
+
+func (h *Handler) updateAppointmentStatus(w http.ResponseWriter, r *http.Request) {
+	var payload types.UpdateAppointmentStatusPayload
+	if err := utils.ParseJSON(r, &payload); err != nil {
+		utils.WriteError(w, http.StatusBadRequest, err)
+		return
+	}
+
+	err := h.store.UpdateStatusAppointment(payload.AppointmentID, payload.Status)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			utils.WriteError(w, http.StatusNotFound, fmt.Errorf("appointment not found"))
+			return
+		}
+		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	if err := utils.WriteJSON(w, http.StatusOK, "status updated"); err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, fmt.Errorf("error generating response"))
 	}
 }
