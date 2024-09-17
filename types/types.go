@@ -13,6 +13,7 @@ type UserStore interface {
 type AppointmentStore interface {
 	CreateAppointment(Appointment) error
 	GetMinimizedAppointments() ([]*MinimizedAppointment, error)
+	UpdateStatusAppointment(id int32, status string) error
 }
 
 // LoginUserPayload represents the payload structure for a user login request.
@@ -60,6 +61,12 @@ type CreateAppointmentPayload struct {
 	LicencePlate     string `json:"licencePlate" validate:"required"`
 	ManufactureYear  int    `json:"manufactureYear" validate:"required"`
 	OwnerPhoneNumber string `json:"ownerPhoneNumber" validate:"required"`
+}
+
+// UpdateAppointmentStatusPayload represents the payload structure for a update status of an appointment.
+type UpdateAppointmentStatusPayload struct {
+	AppointmentID int32  `json:"appointmentId" validate:"required"`
+	Status        string `json:"status" validate:"required"`
 }
 
 // MinimizedAppointment represents the structure for minimized appointments.

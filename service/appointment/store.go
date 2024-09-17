@@ -29,6 +29,24 @@ func (s *Store) CreateAppointment(appointment types.Appointment) error {
 	return nil
 }
 
+func (s *Store) UpdateStatusAppointment(id int32, status string) error {
+	result, err := s.db.Exec("UPDATE appointment SET status = ? WHERE id = ?", status, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return sql.ErrNoRows
+	}
+
+	return nil
+}
+
 // GetMinimizedAppointments retrieves appointments from the database in order by createdAt date.
 func (s *Store) GetMinimizedAppointments() ([]*types.MinimizedAppointment, error) {
 	rows, err := s.db.Query(`
