@@ -2,7 +2,7 @@
 
 ## `🛠️ Stack`
 
-[![My Stack](https://skillicons.dev/icons?i=go,mysql)](https://skillicons.dev)
+[![My Stack](https://skillicons.dev/icons?i=go,mysql,docker)](https://skillicons.dev)
 
 ## `📜 Commands`
 
