@@ -30,12 +30,6 @@ JWT_EXPIRATION_TIME=60 # seconds
 2. Start your Docker containers by running `docker compose up -d` in your terminal
 3. Set up the project locally by running `make run`
 
-### `🔬 Run Tests`
-
-```bash
-make test
-```
-
 ### `✨ Run Lint`
 
 ```bash

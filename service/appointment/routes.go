@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"repair-queue/service/middlewares"
 	"repair-queue/types"
 	"repair-queue/utils"
 
@@ -26,9 +27,9 @@ func NewHandler(store types.AppointmentStore) *Handler {
 
 // RegisterRoutes sets up the HTTP routes for the Handler
 func (h *Handler) RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/appointment", h.createAppointment).Methods("POST")
-	router.HandleFunc("/appointment", h.getMinimizedAppointments).Methods("GET")
-	router.HandleFunc("/appointment/status", h.updateAppointmentStatus).Methods("PUT")
+	router.HandleFunc("/appointment", middlewares.JWTAuthMiddleware()(h.createAppointment)).Methods("POST")
+	router.HandleFunc("/appointment", middlewares.JWTAuthMiddleware()(h.getMinimizedAppointments)).Methods("GET")
+	router.HandleFunc("/appointment/status", middlewares.JWTAuthMiddleware()(h.updateAppointmentStatus)).Methods("PUT")
 }
 
 func (h *Handler) createAppointment(w http.ResponseWriter, r *http.Request) {

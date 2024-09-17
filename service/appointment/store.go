@@ -29,6 +29,7 @@ func (s *Store) CreateAppointment(appointment types.Appointment) error {
 	return nil
 }
 
+// UpdateStatusAppointment updates an appointment record.
 func (s *Store) UpdateStatusAppointment(id int32, status string) error {
 	result, err := s.db.Exec("UPDATE appointment SET status = ? WHERE id = ?", status, id)
 	if err != nil {
