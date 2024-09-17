@@ -53,6 +53,8 @@ func (h *Handler) createAppointment(w http.ResponseWriter, r *http.Request) {
 		ManufactureYear:  payload.ManufactureYear,
 		OwnerPhoneNumber: payload.OwnerPhoneNumber,
 		Status:           types.StatusReceived,
+		Email:            payload.Email,
+		PhoneNumber:      payload.PhoneNumber,
 	})
 	if err != nil {
 		utils.WriteError(w, http.StatusInternalServerError, err)

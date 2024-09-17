@@ -20,8 +20,8 @@ func NewStore(db *sql.DB) *Store {
 
 // CreateAppointment inserts a new user record into the database with the provided appointment details.
 func (s *Store) CreateAppointment(appointment types.Appointment) error {
-	_, err := s.db.Exec("INSERT INTO appointment (reason, model, make, licencePlate, manufactureYear, status, ownerPhoneNumber) VALUES (?,?,?,?,?,?,?)",
-		appointment.Reason, appointment.Model, appointment.Make, appointment.LicencePlate, appointment.ManufactureYear, appointment.Status, appointment.OwnerPhoneNumber)
+	_, err := s.db.Exec("INSERT INTO appointment (reason, model, make, licencePlate, manufactureYear, status, ownerPhoneNumber, email, phoneNumber) VALUES (?,?,?,?,?,?,?,?,?)",
+		appointment.Reason, appointment.Model, appointment.Make, appointment.LicencePlate, appointment.ManufactureYear, appointment.Status, appointment.OwnerPhoneNumber, appointment.Email, appointment.PhoneNumber)
 	if err != nil {
 		return err
 	}
