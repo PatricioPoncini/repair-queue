@@ -50,6 +50,8 @@ type Appointment struct {
 	ManufactureYear  int       `json:"manufactureYear"`
 	Status           string    `json:"status"`
 	OwnerPhoneNumber string    `json:"ownerPhoneNumber"`
+	PhoneNumber      string    `json:"phoneNumber"`
+	Email            string    `json:"email"`
 	CreatedAt        time.Time `json:"createdAt"`
 }
 
@@ -61,6 +63,8 @@ type CreateAppointmentPayload struct {
 	LicencePlate     string `json:"licencePlate" validate:"required"`
 	ManufactureYear  int    `json:"manufactureYear" validate:"required"`
 	OwnerPhoneNumber string `json:"ownerPhoneNumber" validate:"required"`
+	PhoneNumber      string `json:"phoneNumber" validate:"required"`
+	Email            string `json:"email" validate:"required"`
 }
 
 // UpdateAppointmentStatusPayload represents the payload structure for a update status of an appointment.
