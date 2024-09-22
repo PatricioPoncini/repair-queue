@@ -9,6 +9,7 @@ import (
 	"repair-queue/service/user"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 // Server represents the API server configuration and provides methods
@@ -41,7 +42,16 @@ func (a *Server) Run() error {
 	appointmentHandler := appointment.NewHandler(appointmentStore)
 	appointmentHandler.RegisterRoutes(subrouter)
 
+	// CORS config
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true, // Habilita si necesitas soportar cookies en peticiones cross-origin
+	})
+	handler := c.Handler(router)
+
 	fmt.Println("\033[32m✅ Listening on port", a.addr, "\033[0m")
 
-	return http.ListenAndServe(a.addr, router)
+	return http.ListenAndServe(a.addr, handler)
 }
