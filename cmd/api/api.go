@@ -47,7 +47,7 @@ func (a *Server) Run() error {
 		AllowedOrigins:   []string{"http://localhost:5173"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"*"},
-		AllowCredentials: true, // Habilita si necesitas soportar cookies en peticiones cross-origin
+		AllowCredentials: true,
 	})
 	handler := c.Handler(router)
 
